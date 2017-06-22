@@ -1,0 +1,31 @@
+{
+  "name": "ramon.hirsinger",
+  "version": "1.0.0",
+  "description": "this is a standard distribution grunt by ramon hirsinger",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ramonhirsinger/cdist.git"
+  },
+  "author": "Ramon Hirsinger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ramonhirsinger/cdist/issues"
+  },
+  "homepage": "https://github.com/ramonhirsinger/cdist#readme",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-compress": "^1.4.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-cssmin": "^2.1.0",
+    "grunt-contrib-imagemin": "^1.0.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-uglify": "^2.3.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-css": "^0.5.4"
+  }
+}

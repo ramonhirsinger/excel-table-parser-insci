@@ -1,0 +1,7 @@
+@import 'variables.scss';
+
+//FUNCTIONS
+
+@function em($pixels, $context: $BROWSER_CONTEXT) {
+  @return $pixels / $context * 1em;
+}

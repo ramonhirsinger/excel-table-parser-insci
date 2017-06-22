@@ -1,0 +1,255 @@
+@import 'variables.scss';
+
+//MIXINS
+
+@mixin transform($transforms) {
+	   -moz-transform: $transforms;
+	     -o-transform: $transforms;
+	    -ms-transform: $transforms;
+	-webkit-transform: $transforms;
+          transform: $transforms;
+}
+// rotate
+@mixin rotate ($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+ 
+// scale
+@mixin scale($scale) {
+	 @include transform(scale($scale));
+} 
+// translate
+@mixin translate ($x, $y) {
+   @include transform(translate($x, $y));
+}
+// skew
+@mixin skew ($x, $y) {
+   @include transform(skew(#{$x}deg, #{$y}deg));
+}
+//transform origin
+@mixin transform-origin ($origin) {
+    moz-transform-origin: $origin;
+	     -o-transform-origin: $origin;
+	    -ms-transform-origin: $origin;
+	-webkit-transform-origin: $origin;
+          transform-origin: $origin;
+}
+
+@mixin moveXY($x, $y) {
+    -webkit-transform: translate($x, $y);
+    -moz-transform: translate($x, $y);
+    -ms-transform: translate($x, $y);
+    transform: translate($x, $y);
+}
+
+@mixin moveX( $val ) {
+    -webkit-transform: translateX($val);
+    -moz-transform: translateX($val);
+    -ms-transform: translateX($val);
+    transform: translateX($val);
+}
+
+@mixin moveY( $val ) {
+    -webkit-transform: translateY($val);
+    -moz-transform: translateY($val);
+    -ms-transform: translateY($val);
+    transform: translateY($val);
+}
+
+@mixin moveZ( $val ) {
+    -webkit-transform: translateZ($val);
+    -moz-transform: translateZ($val);
+    -ms-transform: translateZ($val);
+    transform: translateZ($val);
+}
+@mixin animation-timing($time) {
+    -webkit-animation-timing-function: $time;
+    -moz-animation-timing-function: $time;
+    -ms-animation-timing-function: $time;
+    -o-animation-timing-function: $time;
+    animation-timing-function: $time;
+}
+
+@mixin animation-break() {
+    -webkit-animation-play-state: paused !important;
+    -moz-animation-play-state: paused !important;
+    -ms-animation-play-state: paused !important;
+    -o-animation-play-state: paused !important;
+    animation-play-state: paused !important;
+}
+
+@mixin animate-element( $keyframeAnim, $time, $delay: 0s, $timing: linear, $behavior: forwards) {
+    -webkit-animation: $keyframeAnim $time $timing $behavior;
+    -moz-animation: $keyframeAnim $time $timing $behavior;
+    -ms-animation: $keyframeAnim $time $timing $behavior;
+    -o-animation: $keyframeAnim $time $timing $behavior;
+    animation: $keyframeAnim $time $timing $behavior;
+    @include animation-delay($delay);
+}
+
+@mixin animation-delay( $delay ) {
+    -webkit-animation-delay: $delay;
+    -moz-animation-delay: $delay;
+    -ms-animation-delay: $delay;
+    -o-animation-delay: $delay;
+    animation-delay: $delay;
+}
+
+@mixin image-2x($image1x, $image2x, $width, $height) {
+
+    background-image: url($image1x);
+    background-size: $width $height;
+    background-repeat: no-repeat;
+
+    @media (min--moz-device-pixel-ratio: 1.3),
+        (-o-min-device-pixel-ratio: 2.6/2),
+        (-webkit-min-device-pixel-ratio: 1.3),
+        (min-device-pixel-ratio: 1.3),
+        (min-resolution: 1.3dppx) {
+        /* on retina, use image that's scaled by 2 */
+        background-image: url($image2x) !important;
+        background-size: $width $height !important;
+    }
+}
+
+@mixin transition-all-ease-in-out($time) {
+    &{
+        transition: $time all ease-in-out;
+        -o-transition: $time all ease-in-out;
+        -ms-transition: $time all ease-in-out;
+        -moz-transition: $time all ease-in-out;
+        -webkit-transition: $time all ease-in-out;
+    }
+}
+
+@mixin include-google-font($name, $file: $name, $path: $PARENT_FOLDER + 'files/themes/theme-webmadeforyou/font/', $folder: $name + '/') {
+    $font-list: ( 
+        ("Black", "-BlackItalic", "Bold", 
+        "BoldItalic", "ExtraBold", "ExtraBoldItalic",
+        "ExtraLight", "ExtraLightItalic", "Italic",
+        "Light","-LightItalic","Medium",
+        "MediumItalic","Regular","SemiBold",
+        "SemiBoldItalic","Thin","ThinItalic")
+        );
+
+    @each $current-font in $font-list {
+
+        $file: $name + '-' + $current-font;
+        $url: $path + $folder + $file;
+        $font-name: $name ;
+        $font-weight: 900;
+        $font-style: regular;
+
+        @if $current-font == "Thin" {
+            $font-weight: 100;
+            $font-style: normal;
+        }
+        @if $current-font == "ThinItalic" {
+            $font-weight: 100;
+            $font-style: italic;
+        }
+        @if $current-font == "ExtraLight" {
+            $font-weight: 200;
+            $font-style: normal;
+        }
+        @if $current-font == "ExtraLightItalic" {
+            $font-weight: 200;
+            $font-style: italic;
+        }
+        @if $current-font == "Light" {
+            $font-weight: 300;
+            $font-style: normal;
+        }
+        @if $current-font == "LightItalic" {
+            $font-weight: 300;
+            $font-style: italic;
+        }
+        @if $current-font == "Regular" {
+            $font-weight: 400;
+            $font-style: normal;
+        }
+        @if $current-font == "RegularItalic" {
+            $font-weight: 400;
+            $font-style: italic;
+        }
+        @if $current-font == "Medium" {
+            $font-weight: 500;
+            $font-style: normal;
+        }
+        @if $current-font == "MediumItalic" {
+            $font-weight: 500;
+            $font-style: italic;
+        }
+        @if $current-font == "SemiBold" {
+            $font-weight: 600;
+            $font-style: normal;
+        }
+        @if $current-font == "SemiBoldItalic" {
+            $font-weight: 600;
+            $font-style: italic;
+        }
+        @if $current-font == "Bold" {
+            $font-weight: 700;
+            $font-style: normal;
+        }
+        @if $current-font == "BoldItalic" {
+            $font-weight: 700;
+            $font-style: italic;
+        }
+        @if $current-font == "ExtraBold" {
+            $font-weight: 800;
+            $font-style: normal;
+        }
+        @if $current-font == "ExtraBoldItalic" {
+            $font-weight: 800;
+            $font-style: italic;
+        }
+        @if $current-font == "Black" {
+            $font-weight: 900;
+            $font-style: normal;
+        }
+        @if $current-font == "BlackItalic" {
+            $font-weight: 900;
+            $font-style: italic;
+        }
+
+        @font-face {
+
+            font-family: $font-name;
+            font-weight: $font-weight;
+            font-style: $font-style;
+
+            src: 
+                /*url('#{$url}.eot'),*/
+                /*url('#{$url}.eot?#iefix') format('embedded-opentype'),*/
+                /*url('#{$url}.woff2') format('woff2'),*/
+                /*url('#{$url}.woff') format('woff'),*/
+                url('#{$url}.ttf')  format('truetype');
+            /*url('#{$url}.svg#svgFontName') format('svg');*/
+        } 
+    }
+}
+
+@mixin breakpoint($point){
+
+    @if ($point == lg){
+        @media (min-width: $screen-lg){ @content }
+    }
+    @else if ($point == md){
+        @media (max-width: $screen-md){ @content }
+    }
+
+    @else if ($point == sm){
+        @media (max-width: $screen-sm){ @content }
+    }
+
+    @else if ($point == xs){
+        @media (max-width: $screen-xs) { @content }
+    }
+
+    @else if ($point == xxs){
+        @media (max-width: $screen-xxs) { @content }
+    }
+
+}
+

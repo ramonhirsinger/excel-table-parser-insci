@@ -1,0 +1,31 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 03.05.2017, 00:19:24
+    Author     : Ramon Hirsinger
+*/
+
+@import 'variables.scss';
+@import 'fonts.scss';
+@import 'style-classes.scss';
+
+
+//Plugins
+//--Bootstrap
+@import '../../plugin/bootstrap/scss/_bootstrap.scss';
+//--Font-Awesome
+@import '../../plugin/font-awesome/scss/_font-awesome.scss';
+//--lightbox2
+@import '../../plugin/lightbox2/scss/lightbox.scss';
+//--selectric
+@import '../../plugin/selectric/scss/selectric.scss';
+
+@import 'functions.scss';
+@import 'extends.scss';
+@import 'mixin.scss';
+@import 'font-awesome-mixin-pck.scss';
+@import 'animation.scss';
+

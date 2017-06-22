@@ -1,0 +1,76 @@
+@import 'mixin.scss';
+@import 'variables.scss';
+
+@keyframes zoomInNavigation {
+    0% { $x: -60%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y); opacity: 0;}
+    5% { $x: -50%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y); opacity: 0.2;}
+    10% { $x: -40%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y); opacity: 0.3;}
+    20% { $x: -30%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y); opacity: 0.4;}
+    40% { $x: -20%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y); opacity: 0.6;}
+    60% { $x:-10%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y); opacity: 0.8;}
+    70% { $x: -8%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); ransform: translate($x, $y); opacity: 0.8;}
+    80% { $x: -5%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y); opacity: 0.9;}
+    90% { $x: -2%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y); opacity: 0.9;}
+    100% { $x: 0%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y);opacity: 1;}
+}
+
+@keyframes zoomOutNavigation {
+    0% { $x: 0%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y); opacity: 1;}
+    5% { $x: -2%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y); opacity: 0.9;}
+    10% { $x: -5%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y); opacity: 0.9;}
+    20% { $x: -8%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y); opacity: 0.8;}
+    40% { $x: -10%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y); opacity: 0.8;}
+    60% { $x:-20%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y); opacity: 0.6;}
+    70% { $x: -30%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); ransform: translate($x, $y); opacity: 0.4;}
+    80% { $x: -40%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y); opacity: 0.3;}
+    90% { $x: -50%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y); opacity: 0.2;}
+    100% { $x: -100%; $y: 100%; -webkit-transform: translate($x, $y); -moz-transform: translate($x, $y); -ms-transform: translate($x, $y); transform: translate($x, $y);opacity: 0;}
+}
+
+@keyframes easeupNavigationElement {
+    0% {transform: translateY(15px); opacity: 0.5;}
+    5% {transform: translateY(14px); opacity: 0.5;}
+    10% {transform: translateY(13px); opacity: 0.6;}
+    15% {transform: translateY(12px); opacity: 0.6;}
+    20% {transform: translateY(11px); opacity: 0.7;}
+    30% {transform: translateY(10px); opacity: 0.7;}
+    40% {transform: translateY(8px); opacity: 0.8;}
+    60% {transform: translateY(6px); opacity: 0.8;}
+    80% {transform: translateY(3px); opacity: 0.9;}
+    100% {transform: translateY(0); opacity: 1;}
+}
+
+@keyframes slidetopNavigationElement {
+    0% {transform: translateY(0); opacity: 1;}
+    5% {transform: translateY(0); opacity: 1;}
+    10% {transform: translateY(-10%); opacity: .9;}
+    15% {transform: translateY(-10%); opacity: .8;}
+    20% {transform: translateY(-20%); opacity: .7;}
+    30% {transform: translateY(-30%); opacity: .6;}
+    40% {transform: translateY(-40%); opacity: .5;}
+    60% {transform: translateY(-60%); opacity: .4;}
+    80% {transform: translateY(-80%); opacity: .3;}
+    100% {transform: translateY(-100%); opacity: .2;}
+}
+
+@keyframes slidefrombottomtonotmalNavigationElement {
+    0% {transform: translateY(100%); opacity: 0;}
+    5% {transform: translateY(100%); opacity: 0;}
+    10% {transform: translateY(90%); opacity: .1;}
+    15% {transform: translateY(80%); opacity: .2;}
+    20% {transform: translateY(80%); opacity: .3;}
+    30% {transform: translateY(70%); opacity: .4;}
+    40% {transform: translateY(60%); opacity: .5;}
+    60% {transform: translateY(40%); opacity: .6;}
+    80% {transform: translateY(20%); opacity: .8;}
+    100% {transform: translateY(0%); opacity: 1;}
+}
+
+@keyframes shortbounce {
+   0% {@include scale(1);} 
+   5% {@include scale(1.1);} 
+   10% {@include scale(1.2);} 
+   15% {@include scale(1.1);} 
+   20% {@include scale(1);}
+   100% {@include scale(1);} 
+} 
