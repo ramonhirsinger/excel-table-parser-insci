@@ -26,9 +26,8 @@ module.exports = function (grunt) {
                     separator: ';'
                 },
                 src: ['script/jquery-3.2.1/jquery-3.2.1.min.js','plugin/bootstrap/js/bootstrap.min.js',
-                      'plugin/lightbox2/js/lightbox.js','plugin/malihu-custom-scrollbar/js/minified/*.js',
                       'plugin/selectric/js/selectric.min.js','plugin/selectric/js/selectric.placeholder.min.js',
-                      'plugin/skrollr/js.skrollr.min.js','plugin/waypoints/js/jquery.waypoints.min.js','plugin/jquery-timing/js/*.js',
+                      'plugin/datepicker/js/*.js',
                       'script/*.js'],
                 dest: '<%= paths.dest.concat %>'
             }

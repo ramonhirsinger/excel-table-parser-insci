@@ -1,4 +1,11 @@
 @import 'lib/import.scss';
 
 html, body {height: 100%; width: 100%;} 
+body {background-color: rgb(252,252,252);}
+.wrapper {margin: 0 auto;}
 
+//INSCI Excel-Parser // Search
+
+section.insci-search-form {
+  & > fieldset {border-bottom: 1px solid #e5e5e5;}
+}
