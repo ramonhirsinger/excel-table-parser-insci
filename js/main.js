@@ -1123,7 +1123,7 @@ var generalScript = (function () {
     $subrows_group_class = "sub-row-group";
     $subrows_toggled_class = "open";
     $subrows_hidden_class = "closed";
-    
+
     $subrows_class = "sub-rows";
 
     var dayRows = $('.day-rows');
@@ -1166,7 +1166,8 @@ var generalScript = (function () {
             var subrowGroup = null;
             if ($this.next().hasClass($subrows_group_class)) {
                 subrowGroup = $this.next();
-                subrowGroup.slideToggle($TRANSITION_TIME);
+                subrowGroup.toggleClass('open');
+                subrowGroup.toggleClass('closed');
             }
         });
     }
@@ -1186,35 +1187,63 @@ var generalScript = (function () {
 
             //FILTER FOR DAYS
             if (dateFilter !== null && dateFilter !== "null") {
-                parseRowsByParam("date", dateFilter);
+                parseRowsByDate(dateFilter);
+            }
+
+            if (timeFilter !== null && timeFilter !== "null") {
+                 parseRowsByDate(timeFilter);
             }
         });
     }
 
-    function parseRowsByParam($param, $filterVal) {
-        if ($param === "date") {
-            //Date
-            dayRows.each(function () {
-                $this = $(this);
-                dayVal = $this.find("input[type=hidden]").val();
-                if ($filterVal === dayVal) {
-                    $this.removeClass('row-hidden');
-                }
-            });
+    function parseRowsByDate($filterVal) {
+        /////DATE
+        //////// Date dayrow
+        dayRows.each(function () {
+            $this = $(this);
+            dayVal = $this.find("input[type=hidden]").val();
+            if ($filterVal === dayVal) {
+                $this.removeClass('row-hidden');
+            }
+        });
+        /////// Date Head & Subrow
+        headRows.each(function () {
+            $this = $(this);
+            dayVal = $this.find(".head-row-anchor").attr('day');
+            if ($filterVal === dayVal) {
+                $this.removeClass('row-hidden');
+            }
 
-            headRows.each(function () {
-                $this = $(this);
-                dayVal = $this.find(".head-row-anchor").attr('day');
-                if ($filterVal === dayVal) {
-                    $this.removeClass('row-hidden');
-                }
+            if ($this.next().hasClass($subrows_group_class)) {
+                subrowGroup = $this.next();
+                subrowGroup.find('.' + $subrows_class).removeClass('row-hidden');
+            }
+        });
+    }
+    
+    function parseRowsByTime($filterVal) {
+        /////DATE
+        //////// Date dayrow
+        dayRows.each(function () {
+            $this = $(this);
+            dayVal = $this.find("input[type=hidden]").val();
+            if ($filterVal === dayVal) {
+                $this.removeClass('row-hidden');
+            }
+        });
+        /////// Date Head & Subrow
+        headRows.each(function () {
+            $this = $(this);
+            dayVal = $this.find(".head-row-anchor").attr('day');
+            if ($filterVal === dayVal) {
+                $this.removeClass('row-hidden');
+            }
 
-                if ($this.next().hasClass($subrows_group_class)) {
-                    subrowGroup = $this.next();
-                    subrowGroup.find('.' + $subrows_class).removeClass('row-hidden');
-                }
-            });
-        }
+            if ($this.next().hasClass($subrows_group_class)) {
+                subrowGroup = $this.next();
+                subrowGroup.find('.' + $subrows_class).removeClass('row-hidden');
+            }
+        });
     }
 
     return {
