@@ -9,9 +9,13 @@ var generalScript = (function () {
 
 
     var init = function () {
-
+        startSelectric();
     }
 
+    function startSelectric() {
+        $('select').selectric();
+    }
+    
     return {
         init: init
     };

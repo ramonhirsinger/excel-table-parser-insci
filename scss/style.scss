@@ -6,6 +6,41 @@ body {background-color: rgb(252,252,252);}
 
 //INSCI Excel-Parser // Search
 
+$table_column_padding: 15px;
+
+$table_color_head: #4672ba;
+$table_color_plenaer: #4672ba;
+$table_color_symposium: #FFAC00;
+
+$table_color_text_head: #fff;
+$table_color_text_plenar: #444;
+$table_color_text_symposium: #444;
+
 section.insci-search-form {
   & > fieldset {border-bottom: 1px solid #e5e5e5;}
+  
+  time.date_table_head {
+      padding: $table_column_padding;
+      color: $table_color_text_head;
+      width: 100%;
+      display: block;
+      background-color: $table_color_head; 
+  }
+  
+  .table_row_box {
+      padding: $table_column_padding;
+      width: 100%;
+      display: block;
+      background-color: $table_color_symposium; 
+      
+      & > span {
+          color: $table_color_text_symposium;
+      }
+  }
+  
+  .table_row_box.id_zero {
+      background-color: #FFF; 
+  }
 }
+
+option {padding-top: 3.5px; padding-bottom: 3.5px;}

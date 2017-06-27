@@ -26,8 +26,7 @@ module.exports = function (grunt) {
                     separator: ';'
                 },
                 src: ['script/jquery-3.2.1/jquery-3.2.1.min.js','plugin/bootstrap/js/bootstrap.min.js',
-                      'plugin/selectric/js/selectric.min.js','plugin/selectric/js/selectric.placeholder.min.js',
-                      'plugin/datepicker/js/*.js',
+                      'plugin/selectric/js/jquery.selectric.js','plugin/selectric/js/jquery.selectric.placeholder.min.js',
                       'script/*.js'],
                 dest: '<%= paths.dest.concat %>'
             }
@@ -97,7 +96,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('image', ['imagemin']);
 
-    grunt.registerTask('css', ['sass:dist', 'cssmin','watch']);
+    grunt.registerTask('css', ['sass:dist', 'cssmin']);
 
-    grunt.registerTask('js', ['concat', 'uglify', 'compress']);
+    grunt.registerTask('js', ['concat']);
 };
