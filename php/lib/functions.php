@@ -30,28 +30,3 @@ function stringNotZero( $val ) {
 function getTimeString( $time ) {
    return substr($time, 0,2) . ":" . substr($time, 2,4) . " Uhr";
 }
-
-function getAuthorlist( $authors ) {
-    $authorlist = explode(',', $authors);
-    
-    echo "<ul class='author-list'>";
-    foreach($authorlist as $key => $author) {
-        echo "<li>" . $author . ".</li>";
-    }
-    echo "</ul>";
-}
-
-function getCoAuthorlist( $coauthors ) {
-    $coauthorlist = explode(',', $coauthors);
-    
-    $i = 0;
-    $indexcounter = 0;
-    
-    echo "<ul class='coauthor-list'>";
-    foreach($coauthorlist as $key => $coauthor) {
-        if($coauthor !== "") {
-            echo "<li>" . $coauthor . ".</li>";
-        }
-    }
-    echo "</ul>";
-}

@@ -32,17 +32,20 @@ and open the template in the editor.
                         );
                         ?>
                         <div class="col-xs-12">
-                            <table>
+                            <table class="result-table">
                                 <tbody>
                                     <?php $last_used_id = "empty"; ?>
                                     <!--DAYS FOREACH-->
                                     <?php foreach ($days as $day_key => $title): ?>
-                                        <tr><td><input type="hidden" name="event_day" value="<?php echo $day_key; ?>" /><time class="date_table_head"><?php echo $title; ?></time></td></tr>
+                                        <tr class="day-rows">
+                                            <td>
+                                                <input type="hidden" name="event_day" value="<?php echo $day_key; ?>" /><time class="date_table_head"><?php echo $title; ?></time>
+                                            </td>
+                                        </tr>
                                         <?php foreach ($events as $event_key => $event): ?>
                                             <?php if ($event['day'] === (string) $day_key): ?>
                                                 <?php if ($last_used_id === "empty" || $last_used_id !== $event['symposium_id']): ?>
                                                     <?php $current_id = $event['symposium_id']; ?>
-                                                    <!------->
                                                     <tr class="head-rows">
                                                         <td>
                                                             <?php if ($event['symposium_id'] !== "0"): ?>
@@ -82,9 +85,7 @@ and open the template in the editor.
                                                             </table>
                                                         </td>
                                                     </tr>
-                                                    <!------->  
                                                 <?php else: ?>
-                                                    <!---SUBROW START---->
                                                     <tr class="sub-rows <?php echo $event['symposium_id']; ?>">
                                                         <td>
                                                             <input class="search-anchor sub-row-anchor" 
@@ -126,7 +127,6 @@ and open the template in the editor.
                                                             </table>
                                                         </td>
                                                     </tr>
-                                                    <!---SUBROW END---->
                                                 <?php endif; ?>
 
                                                 <?php

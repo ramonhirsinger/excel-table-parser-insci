@@ -24,8 +24,8 @@ try {
 
 
 foreach ($sheets as $sheet_index => $sheet_name) {
+    
     $reader->ChangeSheet($sheet_index);
-
     $auth = "";
     $coauthlist = array();
     $zippedArray = array();
