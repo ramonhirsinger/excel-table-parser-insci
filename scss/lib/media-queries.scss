@@ -1,0 +1,7 @@
+@media print {
+    #table-filter-head {
+        & {display: none;}
+    }  
+
+    time {font-size: 28px; color: #0086B3; font-weight: bold;}
+} 

@@ -9,7 +9,7 @@ require('script/spreadsheet-reader/php-excel-reader/excel_reader2.php');
 require('script/spreadsheet-reader/SpreadsheetReader.php');
 
 try {
-    $reader = new SpreadsheetReader('files/vliste.xlsx');
+    $reader = new SpreadsheetReader('files/exliste.xlsx');
     $baseMem = memory_get_usage();
 } catch (Exception $E) {
     echo $E->getMessage();
@@ -26,7 +26,7 @@ $param_no_symposium = 0;
 $symposium_list = array();
 $non_symposium_list = array();
 
-$header_keys = array("title_symposium", "day", "starttime", "symposium_id", "id", "title_contribution", "presenter", "other_presenters");
+$header_keys = array("title_symposium", "day", "starttime", "symposium_id", "id", "title_contribution", "presenter", "other_presenters","room","chair");
 
 foreach ($reader as $key => $row) {
     //Key = 0 sind die Tabellenköpfe

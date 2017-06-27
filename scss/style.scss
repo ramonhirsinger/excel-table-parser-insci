@@ -8,39 +8,86 @@ body {background-color: rgb(252,252,252);}
 
 $table_column_padding: 15px;
 
+$table_head_rows_border_color: #f7f7f7;
+
 $table_color_head: #4672ba;
-$table_color_plenaer: #4672ba;
-$table_color_symposium: #FFAC00;
+$table_color_plenar: #B3D0FF;
+$table_color_post: $table_color_plenar;
+$table_color_symposium: #ccffcc;
+$reading_id_color: #E87E0C;
 
 $table_color_text_head: #fff;
 $table_color_text_plenar: #444;
 $table_color_text_symposium: #444;
 
 section.insci-search-form {
-  & > fieldset {border-bottom: 1px solid #e5e5e5;}
-  
-  time.date_table_head {
-      padding: $table_column_padding;
-      color: $table_color_text_head;
-      width: 100%;
-      display: block;
-      background-color: $table_color_head; 
-  }
-  
-  .table_row_box {
-      padding: $table_column_padding;
-      width: 100%;
-      display: block;
-      background-color: $table_color_symposium; 
-      
-      & > span {
-          color: $table_color_text_symposium;
-      }
-  }
-  
-  .table_row_box.id_zero {
-      background-color: #FFF; 
-  }
+    & > fieldset {border-bottom: 1px solid #e5e5e5;}
+    
+
+    time.date_table_head {
+        padding: $table_column_padding;
+        color: $table_color_text_head;
+        width: 100%;
+        display: block;
+        background-color: $table_color_head; 
+    }
+
+    .table_row_box {
+        padding: $table_column_padding $table_column_padding 0 $table_column_padding;
+        width: 100%;
+        display: block;
+        
+        .reading-id {
+            & {color:$reading_id_color;}
+        }
+        
+        td {padding-bottom: 15px;}
+
+        &.other-event {
+            background-color: #FFF; 
+        }
+
+        &.symposium-event {
+            background-color: $table_color_symposium; 
+        }
+        &.poster-session {
+            background-color: $table_color_plenar; 
+        }
+        &.plenar-event {
+            background-color: $table_color_plenar; 
+        }
+
+        & > span {
+            color: $table_color_text_symposium;
+        }
+
+        & tbody {display: table;}
+        & tbody, tr {width: 100%;}
+        
+        ul.author-list,
+        ul.coauthor-list{
+            margin: 0; padding: 0; margin-left: 15px;
+            > li {width: 100%; font-weight: bold; list-style: disc; margin-bottom: 10px;}
+        }
+        p {margin: 0;}
+    }
+
 }
 
+
+.head-rows {border: 1px solid $table_head_rows_border_color;}
+.sub-rows {border: 1px solid $table_head_rows_border_color; background-color: #fff;}
+.sub-rows-group.open {}
+.sub-rows-group.closed {}
+
+td.t-c-10 {width: 10% !important;}
+td.t-c-20 {width: 20% !important;}
+td.t-c-30 {width: 30% !important;}
+td.t-c-40 {width: 40% !important;}
+td.t-c-50 {width: 50% !important;}
+td.cell-block {display: block;}
+td.align-top {vertical-align: top;}
+
 option {padding-top: 3.5px; padding-bottom: 3.5px;}
+
+@import 'lib/media-queries.scss';

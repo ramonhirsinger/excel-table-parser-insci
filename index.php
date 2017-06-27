@@ -14,147 +14,132 @@ and open the template in the editor.
         <?php
         include './php/data/authorlist.php';
         include './php/data/events.php';
+        include './php/lib/functions.php';
         ?>
         <div class="wrapper container">
             <section class="insci-search-form">
-                <fieldset class="row mt-20 pt-20 mb-20 pb-20">
-                    <div class="col-xs-12">
-                        <legend>Suche</legend>
-                    </div>
-                    <div class="col-xs-3">
-                        <div class="form-group">
-                            <div class='input-group date' id='event-date-picker'>
-                                <select type='text' name="in_date" class="form-control">
-                                    <option value="null">Datum</option>
-                                    <option value="18.09.2017">Montag - 18.09.2017</option>
-                                    <option value="19.09.2017">Dienstag - 19.09.2017</option>
-                                    <option value="20.09.2017">Mittwoch - 20.09.2017</option>
-
-                                </select>
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="form-group">
-                            <div class="input-group date">
-                                <select class="form-control" name="in_time">
-                                    <option value="null">Uhrzeit</option>
-                                    <option>10:00 Uhr (a.m)</option>
-                                    <option>10:45 Uhr (a.m)</option>
-                                    <option>13:15 Uhr (p.m)</option>
-                                    <option>15:15 Uhr (p.m)</option>
-                                    <option>17:00 Uhr (p.m)</option>
-                                </select>
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-hourglass"></span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <input class="form-control" name="in_plain_text" placeholder="Stichwortsuche" />
-                    </div>
-                    <div class="col-xs-3">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <select class="form-control" name="in_author" placeholder="Autoren" id="search_author" >
-                                    <option value="null">Verfügbare Autoren</option>
-                                    <?php foreach ($authors as $key => $author_name): ?>
-                                        <?php if ($author_name !== "."): ?>
-                                            <option value="<?php echo $key; ?>"><?php echo $author_name; ?></option>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                </select>
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-user"></span>
-                                </span>
-                            </div>
-                        </div>
-                        <label class="mt-10 pull-right">Nach Co-Autoren Filtern <input name="check_co_authors" class="ml-10" type="checkbox" /></label>
-                    </div>
-                    <div class="col-xs-12">
-                        <a class="btn btn-default pull-right mt-20" href="" id="perform_search">Suchen</a>
-                    </div>
-                </fieldset>
+                <?php include './filter.php '; ?>
                 <div class="insci-search-body">
                     <div class="row">
                         <div class="col-xs-12 hidden">
                             <h4>Keine Suchergebnisse</h4>
                         </div>
+                        <?php
+                        $days = array(
+                            "18" => "Montag, 18.09.2017",
+                            "19" => "Dienstag, 19.09.2017",
+                            "20" => "Mittwoch, 20.09.2017"
+                        );
+                        ?>
                         <div class="col-xs-12">
                             <table>
                                 <tbody>
-                                    <?php $last_used_symposium_id = "empty"; ?>
-                                    <?php $last_used_plenar_id = "empty"; ?>
-                                    <tr><td><input type="hidden" name="event_day" value="18" /><time class="date_table_head">Montag, 18.09.2017</time></td></tr>
-                                    <?php foreach ($events as $event_key => $event): ?>
-                                        <!------->
-                                        <?php if ($event['day'] === "18"): ?>
-                                            <?php if ($last_used_symposium_id === "empty" || $last_used_symposium_id !== $event['symposium_id'] && substr($event['symposium_id'], 0, 1) !== "P"): ?>
-                                                <?php $current_symposium_id = $event['symposium_id']; ?>
-                                                <tr>
-                                                    <td>
-                                                        <div class="table_row_box <?php if($event['symposium_id'] === "0"){ echo "id_zero"; }?>">
-                                                             <?php echo "<span>" . stripslashes($event['title_symposium']) . "</span>"; ?>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            <?php endif; ?>
+                                    <?php $last_used_id = "empty"; ?>
+                                    <!--DAYS FOREACH-->
+                                    <?php foreach ($days as $day_key => $title): ?>
+                                        <tr><td><input type="hidden" name="event_day" value="<?php echo $day_key; ?>" /><time class="date_table_head"><?php echo $title; ?></time></td></tr>
+                                        <?php foreach ($events as $event_key => $event): ?>
+                                            <?php if ($event['day'] === (string) $day_key): ?>
+                                                <?php if ($last_used_id === "empty" || $last_used_id !== $event['symposium_id']): ?>
+                                                    <?php $current_id = $event['symposium_id']; ?>
+                                                    <!------->
+                                                    <tr class="head-rows">
+                                                        <td>
+                                                            <?php if ($event['symposium_id'] !== "0"): ?>
+                                                                <input class="search-anchor head-row-anchor" 
+                                                                       type="hidden"
+                                                                       day="<?php echo $day_key; ?>" 
+                                                                       starttime="<?php echo getTimeString($event['starttime']); ?>"
+                                                                       room="<?php echo $event['room']; ?>"
+                                                                       chair="<?php echo $event['chair']; ?>"
+                                                                       row-type="head" 
+                                                                       event-id="<?php echo $event['symposium_id']; ?>"
+                                                                       />
+                                                                   <?php else: ?>
+                                                                <input class="search-anchor pause-row-anchor" type="hidden" day="<?php $day_key; ?>" row-type="head" />
+                                                            <?php endif; ?>
+                                                            <table class="table_row_box <?php getStyleClassById($current_id) ?>">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td><?php echo "<span><b>" . stringNotZero($event['symposium_id']) . "</b>" . stripslashes($event['title_symposium']) . "</span>"; ?></td>
+                                                                        <td class="t-c-10"><?php echo "<span><b>" . getTimeString($event['starttime']) . "</b></span>"; ?></td>
+                                                                    </tr>
+                                                                    <?php if ($event['title_symposium'] !== "Pause" && $event['title_symposium'] !== "Posterpause"): ?>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <?php if ($event['chair'] !== "-"): ?>
+                                                                                    <?php echo "<span>Chairs: </span> " . $event['chair']; ?>
+                                                                                <?php endif; ?>
+                                                                            </td>
+                                                                            <td class="t-c-10">
+                                                                                <?php if ($event['room'] !== "-"): ?>
+                                                                                    <?php echo "<span>Raum: <b>" . $event['room'] . "</b></span>"; ?>
+                                                                                <?php endif; ?>
+                                                                            </td>
+                                                                        </tr>
+                                                                    <?php endif; ?>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <!------->  
+                                                <?php else: ?>
+                                                    <!---SUBROW START---->
+                                                    <tr class="sub-rows <?php echo $event['symposium_id']; ?>">
+                                                        <td>
+                                                            <input class="search-anchor sub-row-anchor" 
+                                                                   type="hidden"
+                                                                   day="<?php $day_key; ?>" 
+                                                                   starttime="<?php echo getTimeString($event['starttime']); ?>"
+                                                                   row-type="sub" 
+                                                                   event-id="<?php echo $event['symposium_id']; ?>" 
+                                                                   reading-id="<?php echo $event['id']; ?>" 
+                                                                   contribution-title="<?php echo $event['title_contribution']; ?>" 
+                                                                   presenter-name="<?php echo $event['presenter']; ?>" 
+                                                                   copresenters-name="<?php echo $event['other_presenters']; ?>" 
 
-                                            <?php
-                                            $last_used_symposium_id = $current_symposium_id;
-                                            $last_used_plenar_id = $current_plenar_id;
-                                            ?>
-                                        <?php endif; ?>
-                                        <!------->        
-                                    <?php endforeach; ?>
-                                        <tr><td><input type="hidden" name="event_day" value="19" /><time class="date_table_head">Dienstag, 19.09.2017</time></td></tr>
-                                    <?php foreach ($events as $event_key => $event): ?>
-                                        <!------->
-                                        <?php if ($event['day'] === "19"): ?>
-                                            <?php if ($last_used_symposium_id === "empty" || $last_used_symposium_id !== $event['symposium_id'] && substr($event['symposium_id'], 0, 1) !== "P"): ?>
-                                                <?php $current_symposium_id = $event['symposium_id']; ?>
-                                                <tr>
-                                                    <td>
-                                                        <div class="table_row_box <?php if($event['symposium_id'] === "0"){ echo "id_zero"; }?>">
-                                                             <?php echo "<span>" . stripslashes($event['title_symposium']) . "</span>"; ?>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            <?php endif; ?>
+                                                                   />
+                                                            <table class="table_row_box">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="t-c-10 align-top"><?php echo "<span class='reading-id'><b>" . $event['id'] . "</b></span>"; ?></td>
+                                                                        <td colspan="3"><?php echo "<p><b>" . $event['title_contribution'] . "</b></p>"; ?></td>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="t-c-10 align-top"><span>Autor: </span></td>
+                                                                        <td class="t-c-20 align-top">
+                                                                            <?php echo "<span>" . $event['presenter'] . "</span>"; ?>
+                                                                        </td>
+                                                                        <td class="t-c-20 align-top">
+                                                                            <?php if ($event['other_presenters'] !== "" && $event['other_presenters'] !== "-"): ?>
+                                                                                <span>Weitere Autoren(innen):</span>
+                                                                            <?php endif; ?>
+                                                                        </td>
+                                                                        <td class="t-c-50 align-top">
+                                                                            <?php if ($event['other_presenters'] !== "" && $event['other_presenters'] !== "-"): ?>
+                                                                                <?php echo "<span>" . $event['other_presenters'] . "</span>"; ?>
+                                                                            <?php endif; ?>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <!---SUBROW END---->
+                                                <?php endif; ?>
 
-                                            <?php
-                                            $last_used_symposium_id = $current_symposium_id;
-                                            $last_used_plenar_id = $current_plenar_id;
-                                            ?>
-                                        <?php endif; ?>
-                                        <!------->        
-                                    <?php endforeach; ?>
-                                    <tr><td><input type="hidden" name="event_day" value="20" /><time class="date_table_head">Mittwoch, 20.09.2017</time></td></tr>
-                                    <?php foreach ($events as $event_key => $event): ?>
-                                        <!------->
-                                        <?php if ($event['day'] === "20"): ?>
-                                            <?php if ($last_used_symposium_id === "empty" || $last_used_symposium_id !== $event['symposium_id'] && substr($event['symposium_id'], 0, 1) !== "P"): ?>
-                                                <?php $current_symposium_id = $event['symposium_id']; ?>
-                                                <tr>
-                                                    <td>
-                                                       <div class="table_row_box <?php if($event['symposium_id'] === "0"){ echo "id_zero"; }?>">
-                                                             <?php echo "<span>" . stripslashes($event['title_symposium']) . "</span>"; ?>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            <?php endif; ?>
+                                                <?php
+                                                $last_used_id = $current_id;
+                                                if ($last_used_id === "0") {
+                                                    $last_used_id = "empty";
+                                                }
+                                                ?>
 
-                                            <?php
-                                            $last_used_symposium_id = $current_symposium_id;
-                                            $last_used_plenar_id = $current_plenar_id;
-                                            ?>
-                                        <?php endif; ?>
-                                        <!------->        
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
                                     <?php endforeach; ?>
+                                    <!--END DAYS FOREACH-->
                                 </tbody>
                             </table>
                         </div>
