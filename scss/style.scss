@@ -8,7 +8,7 @@ body {background-color: rgb(252,252,252);}
 
 $table_column_padding: 15px;
 
-$table_head_rows_border_color: #f7f7f7;
+$table_head_rows_border_color: rgb(174,174,174);
 
 $table_color_head: #4672ba;
 $table_color_plenar: #B3D0FF;
@@ -20,9 +20,12 @@ $table_row_hover_color: #b3ecff;
 $table_color_text_head: #fff;
 $table_color_text_plenar: #444;
 $table_color_text_symposium: #444;
+$table_color_subrow_border: #f7f7f7;
 
 .row-hidden {display:none !important;}
 .result-table {width: 100%;}
+
+.full-link {height: 100%; width: 100%; display: block; cursor: pointer;}
 
 section.insci-search-form {
     & > fieldset {border-bottom: 1px solid #e5e5e5;}
@@ -71,8 +74,11 @@ section.insci-search-form {
 
 
 .head-rows {
-    &{border: 1px solid $table_head_rows_border_color; cursor: pointer;}
-
+    
+    &{border-top: 1px solid $table_head_rows_border_color; border-left: 1px solid $table_head_rows_border_color; border-right: 1px solid $table_head_rows_border_color; cursor: pointer; border-bottom-width: 0px !important;}
+    
+    & > td {border-bottom: 1px solid $table_head_rows_border_color;}
+    
     .table_row_box {
         @include transition-all-ease-in-out(0.2s);
     }
@@ -97,8 +103,12 @@ section.insci-search-form {
 
 .sub-row-group {display: table; width: 100%;}
 .sub-row-group {
-    table {background-color: #fff; border: 1px solid $table_head_rows_border_color;}
+    table {
+        &{background-color: #fff; border-left: 1px solid $table_head_rows_border_color; border-right: 1px solid $table_head_rows_border_color; border-bottom: 1px solid $table_color_subrow_border;}
+    }
+    
 }
+
 .sub-row-group.open {display: table}
 .sub-row-group.closed {display: none;}
 
@@ -110,5 +120,9 @@ td.t-c-50 {width: 50% !important;}
 td.align-top {vertical-align: top;}
 
 option {padding-top: 3.5px; padding-bottom: 3.5px;}
+
+.result-column > h4 {
+    &{margin-top: 20px; margin-left: 5px;}
+}
 
 @import 'lib/media-queries.scss';

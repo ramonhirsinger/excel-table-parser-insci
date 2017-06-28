@@ -18,12 +18,92 @@ and open the template in the editor.
         ?>
         <div class="wrapper container">
             <section class="insci-search-form">
-                <?php include './filter.php '; ?>
+                <fieldset class="row mt-20 pt-20 mb-20 pb-20" id="table-filter-head">
+                    <div class="col-xs-12">
+                        <legend>Suche</legend>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="form-group">
+                            <div class='input-group date' id='event-date-picker'>
+                                <select type='text' name="in_date" class="form-control">
+                                    <option value="null">Datum w&auml;hlen</option>
+                                    <option value="18">Montag - 18.09.2017</option>
+                                    <option value="19">Dienstag - 19.09.2017</option>
+                                    <option value="20">Mittwoch - 20.09.2017</option>
+                                </select>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        <div class="form-group">
+                            <div class="input-group date">
+                                <select class="form-control" name="in_time">
+                                    <option value="null">Uhrzeit w&auml;hlen</option>
+                                    <option value="09:00 Uhr">09:00 Uhr (a.m)</option>
+                                    <option value="10:00 Uhr">10:00 Uhr (a.m)</option>
+                                    <option value="11:00 Uhr">11:00 Uhr (a.m)</option>
+                                    <option value="10:45 Uhr">10:45 Uhr (a.m)</option>
+                                    <option value="12:15 Uhr">12:15 Uhr (p.m)</option>
+                                    <option value="12:30 Uhr">12:30 Uhr (p.m)</option>
+                                    <option value="13:15 Uhr">13:15 Uhr (p.m)</option>
+                                    <option value="13:30 Uhr">13:30 Uhr (p.m)</option>
+                                    <option value="14:45 Uhr">14:45 Uhr (p.m)</option>
+                                    <option value="15:15 Uhr">15:15 Uhr (p.m)</option>
+                                    <option value="17:00 Uhr">17:00 Uhr (p.m)</option>
+                                    <option value="18:15 Uhr">18:15 Uhr (p.m)</option>
+                                    <option value="20:00 Uhr">20:00 Uhr (p.m)</option>
+                                </select>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-hourglass"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <input type="text" class="form-control" name="in_plain_text" placeholder="Stichwortsuche" value=""/>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <select class="form-control" name="in_author" placeholder="Autoren" id="search_author" >
+                                    <option value="null">Verfügbare Autoren</option>
+                                    <?php foreach ($authors as $key => $author_name): ?>
+                                        <?php if ($author_name !== "."): ?>
+                                            <option value="<?php echo $key; ?>"><?php echo $author_name; ?></option>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </select>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <label class="mt-10 pull-right">Nach Co-Autoren Filtern <input name="check_co_authors" class="ml-10" type="checkbox" /></label>
+                    </div>
+                    <div class="col-xs-6">
+                        <button type="button" class="btn btn-default pull-left foot-button" aria-label="Ansicht drucken"  onClick="javascript:generalScript.printPage()">
+                            <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="col-xs-6">
+                        <button type="button" class="btn btn-default pull-right foot-button" id="perform_search" aria-label="Search">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span><span>
+                                Suche
+                            </span>
+                        </button>
+                        <button type="button" class="btn btn-default pull-right foot-button mr-20" id="perform_reset" aria-label="reset">
+                            <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span><span>
+                                Zur&uuml;cksetzen
+                            </span>
+                        </button>
+                    </div>
+                </fieldset>
                 <div class="insci-search-body">
                     <div class="row">
-                        <div class="col-xs-12 hidden">
-                            <h4>Keine Suchergebnisse</h4>
-                        </div>
+
                         <?php
                         $days = array(
                             "18" => "Montag, 18.09.2017",
@@ -57,15 +137,32 @@ and open the template in the editor.
                                                                        chair="<?php echo $event['chair']; ?>"
                                                                        row-type="head" 
                                                                        event-id="<?php echo $event['symposium_id']; ?>"
+                                                                       title-symposium="<?php echo stripslashes($event['title_symposium'])?>"
                                                                        />
                                                                    <?php else: ?>
-                                                                <input class="search-anchor pause-row-anchor" type="hidden" day="<?php $day_key; ?>" row-type="head" />
-                                                            <?php endif; ?>
+                                                                <input class="search-anchor head-row-anchor" 
+                                                                       type="hidden" 
+                                                                       day="<?php echo $day_key; ?>" 
+                                                                       starttime="<?php echo getTimeString($event['starttime']); ?>" 
+                                                                       row-type="head" 
+                                                                       room="<?php echo $event['room']; ?>"
+                                                                       title-symposium="<?php echo stripslashes($event['title_symposium'])?>"
+                                                                       />
+                                                                   <?php endif; ?>
                                                             <table class="table_row_box <?php getStyleClassById($current_id) ?>">
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td><?php echo "<span><b>" . stringNotZero($event['symposium_id']) . "</b>" . stripslashes($event['title_symposium']) . "</span>"; ?></td>
-                                                                        <td class="t-c-10"><?php echo "<span><b>" . getTimeString($event['starttime']) . "</b></span>"; ?></td>
+
+                                                                        <?php if ($event['title_symposium'] !== "Lesung"): ?>
+                                                                            <td>
+                                                                                <?php if ($event['symposium_id'] !== "0"): ?>
+                                                                                    <i class="toggle-arrow glyphicon glyphicon-chevron-down mr-30"></i>
+                                                                                <?php endif; ?>
+                                                                                <?php echo "<span><b>" . stringNotZero($event['symposium_id']) . "</b>" . stripslashes($event['title_symposium']) . "</span>"; ?></td>
+                                                                        <?php else: ?>
+                                                                            <td><?php echo "<a class='full-link' target='_blank' href='https://www.suchtkongress2017.de/programm/oeffentliche-lesung/'><b>" . stringNotZero($event['symposium_id']) . "</b>" . stripslashes($event['title_symposium']) . "</a>"; ?></td>
+                                                                        <?php endif; ?>
+                                                                        <td class="t-c-10"><?php echo "<span>Zeit: <b>" . getTimeString($event['starttime']) . "</b></span>"; ?></td>
                                                                     </tr>
                                                                     <?php if ($event['title_symposium'] !== "Pause" && $event['title_symposium'] !== "Posterpause"): ?>
                                                                         <tr>
@@ -108,7 +205,7 @@ and open the template in the editor.
                                                                         <td></td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td class="t-c-10 align-top"><span>Autor: </span></td>
+                                                                        <td class="t-c-10 align-top"><span>Autor(in): </span></td>
                                                                         <td class="t-c-20 align-top">
                                                                             <?php echo "<span>" . $event['presenter'] . "</span>"; ?>
                                                                         </td>
@@ -142,6 +239,9 @@ and open the template in the editor.
                                     <!--END DAYS FOREACH-->
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="col-xs-12 hidden result-column">
+                            <h4>Keine Suchergebnisse</h4>
                         </div>
                     </div>
                 </div>
