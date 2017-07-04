@@ -3,16 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/exParser/css/main.min.css</file>
-            <file>file:/C:/xampp/htdocs/exParser/excelparser_v1/authors.php</file>
-            <file>file:/C:/xampp/htdocs/exParser/excelparser_v1/eventlist.php</file>
-            <file>file:/C:/xampp/htdocs/exParser/scss/lib/media-queries.scss</file>
-            <file>file:/C:/xampp/htdocs/exParser/script/script.js</file>
-            <file>file:/C:/xampp/htdocs/exParser/php/lib/functions.php</file>
-            <file>file:/C:/xampp/htdocs/exParser/index.php</file>
-            <file>file:/C:/xampp/htdocs/exParser/filter.php</file>
-            <file>file:/C:/xampp/htdocs/exParser/scss/style.scss</file>
-            <file>file:/C:/xampp/htdocs/exParser/php/data/events.php</file>
+            <file>file:/C:/xampp/htdocs/excel-table-parser-insci/scss/lib/style-classes.scss</file>
+            <file>file:/C:/xampp/htdocs/excel-table-parser-insci/index.php</file>
+            <file>file:/C:/xampp/htdocs/excel-table-parser-insci/scss/style.scss</file>
+            <file>file:/C:/xampp/htdocs/excel-table-parser-insci/script/script.js</file>
         </group>
     </open-files>
 </project-private>

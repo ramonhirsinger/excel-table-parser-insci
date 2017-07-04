@@ -18,7 +18,11 @@ var generalScript = (function () {
 
     var dayRows = $('.day-rows');
     var headRows = $('.head-rows');
+    var subrowgroups = $('.' + $subrows_group_class);
     var subRows = $('.sub-rows');
+    var toggle_arrows = $('.toggle-arrow');
+
+    var coauthorFilter = $('#check_coauthor');
 
     var init = function () {
         startSelectric();
@@ -74,7 +78,14 @@ var generalScript = (function () {
     function initResetBtn() {
         $('#perform_reset').click(function () {
             resetAll();
+            resetFields();
         });
+    }
+
+    function resetFields() {
+        $('select').selectric('init');
+        $('input[name=in_plain_text]').val("");
+        $('#check_coauthor').prop("checked", false);
     }
 
     function initSearchBtn() {
@@ -82,7 +93,12 @@ var generalScript = (function () {
 
             dayRows.removeClass('row-hidden');
             headRows.removeClass('row-hidden');
-            $('.' + $subrows_group_class).addClass('closed');
+            subRows.removeClass('row-hidden');
+
+            $arrows = $('.toggle-arrow');
+            $arrows.removeClass('glyphicon-chevron-up');
+            $arrows.addClass('glyphicon-chevron-down');
+            $('.' + $subrows_group_class).removeClass('open').addClass('closed');
 
             //FILTERS
             var dateFilter = $('select[name=in_date]').val();
@@ -90,12 +106,10 @@ var generalScript = (function () {
             var plainTextFilter = $('input[name=in_plain_text]').val();
             var authorFilter = $('select[name=in_author]').val();
 
+
             //FILTER FOR DAYS
-
-            if (dateFilter !== "null" || timeFilter !== "null" || "undefined" !== typeof plainTextFilter || authorFilter !== "null") {
-
+            if (dateFilter !== "null" || timeFilter !== "null" || plainTextFilter !== "" || authorFilter !== "null") {
                 var resultless = $('.result-column');
-
                 if (!resultless.hasClass('hidden')) {
                     resultless.addClass('hidden');
                 }
@@ -108,12 +122,13 @@ var generalScript = (function () {
                     parseRowsByParam("time", timeFilter);
                 }
 
-                if (plainTextFilter !== "" && "undefined" !== typeof plainTextFilter) {
+                if (plainTextFilter !== "") {
+                    console.log("hallo");
                     parseRowsByParam("text", plainTextFilter);
                 }
 
-                if (headRows.length === $('.row-hidden.head-rows').length) {
-                    resultless.removeClass('hidden');
+                if (authorFilter !== null && authorFilter !== "null") {
+                    parseRowsByParam("author", authorFilter);
                 }
 
                 $('.day-rows').each(function () {
@@ -125,20 +140,33 @@ var generalScript = (function () {
                     }
                 });
 
-
+                if (headRows.length === $('.row-hidden.head-rows').length) {
+                    resultless.removeClass('hidden');
+                }
             } else {
                 resetAll();
             }
-
         });
     }
 
     function resetAll() {
         dayRows.removeClass('row-hidden');
         headRows.removeClass('row-hidden');
+        $('.' + $subrows_group_class).removeClass('open').addClass('closed');
+        subRows.removeClass('row-hidden');
+        resetArrows();
+
+    }
+
+    function resetArrows() {
+        toggle_arrows.removeClass('glyphicon-chevron-up');
+        toggle_arrows.addClass('glyphicon-chevron-down');
     }
 
     function parseRowsByParam($param, $filterVal) {
+
+        resetArrows();
+
         if ($param === "date") {
             //Date
             dayRows.each(function () {
@@ -159,7 +187,6 @@ var generalScript = (function () {
                 } else {
                     $this.addClass('row-hidden');
                 }
-
                 if ($this.next().hasClass($subrows_group_class)) {
                     subrowGroup = $this.next();
                     subrowGroup.find('.' + $subrows_class).removeClass('row-hidden');
@@ -175,11 +202,14 @@ var generalScript = (function () {
                 $this = $(this);
                 if (!$this.hasClass('row-hidden')) {
                     $this.nextUntil('.day-rows').each(function () {
-                        var search_time = $(this).find('.search-anchor.head-row-anchor').attr('starttime');
-                        if ("undefined" !== typeof search_time && search_time !== $filterVal) {
-                            $(this).addClass('row-hidden');
-                        } else {
-                            $(this).removeClass('row-hidden');
+                        $headrow = $(this);
+                        if (!$headrow.hasClass('row-hidden')) {
+                            var search_time = $headrow.find('.search-anchor.head-row-anchor').attr('starttime');
+                            if ("undefined" !== typeof search_time && search_time !== $filterVal) {
+                                $headrow.addClass('row-hidden');
+                            } else {
+                                $headrow.removeClass('row-hidden');
+                            }
                         }
                     });
                 }
@@ -187,39 +217,125 @@ var generalScript = (function () {
         }
 
         if ($param === "text") {
-
             dayRows.each(function () {
                 $this = $(this);
+
+//                subRows.removeClass('.row-hidden');
+//                $('.' + $subrows_group_class).addClass('closed');
+
                 if (!$this.hasClass('row-hidden')) {
-
                     $this.nextUntil('.day-rows').each(function () {
-                        $this = $(this);
-
-                        if ($this.hasClass('head-rows')) {
+                        $headrow = $(this);
+                        if ($headrow.hasClass('head-rows') && !$headrow.hasClass('row-hidden')) {
 
                             var title_symposium = $(this).find('.search-anchor.head-row-anchor').attr('title-symposium');
                             var chair = $(this).find('.search-anchor.head-row-anchor').attr('chair');
+                            var contribution_title = $(this).find('.search-anchor.head-row-anchor').attr('contribution-title');
+
+                            $headrow = $(this);
+                            $subrowgroup = $headrow.next();
+                            $arrow = $headrow.find('.toggle-arrow');
 
                             var headText = title_symposium + " " + chair;
-
                             if (headText.indexOf($filterVal) !== -1) {
                                 $(this).removeClass('row-hidden');
                             } else {
                                 $(this).addClass('row-hidden');
                             }
+
+                            if ($subrowgroup.hasClass($subrows_group_class)) {
+                                var subrows = $subrowgroup.find('.' + $subrows_class);
+                                $subrow = null;
+                                subrows.each(function () {
+                                    $subrow = $(this);
+                                    var contribution_title = $subrow.find('.search-anchor.sub-row-anchor').attr('contribution-title');
+                                    if (contribution_title.indexOf($filterVal) !== -1) {
+                                        $headrow.removeClass('row-hidden');
+                                        $arrow.removeClass('glyphicon-chevron-down');
+                                        $arrow.addClass('glyphicon-chevron-up');
+                                        $subrow.closest('.sub-row-group').removeClass('closed');
+                                        $subrow.closest('.sub-row-group').addClass('open');
+                                        $subrow.removeClass('row-hidden');
+                                    } else {
+                                        $(this).addClass('row-hidden');
+                                    }
+                                });
+                            }
+
+                            if (!$headrow.hasClass('row-hidden')) {
+                                if ($subrowgroup.find('.row-hidden').length === $subrowgroup.find('.sub-rows').length) {
+                                    $subrowgroup.find('.sub-rows').removeClass('row-hidden');
+                                }
+                            }
                         }
-
-                        var text = $filterVal;
-
-                        // Suche auf Ebene der Headrow
-//                        if ("undefined" !== typeof search_time && search_time !== $filterVal) {
-//                            $(this).addClass('row-hidden');
-//                        } else {
-//                            $(this).removeClass('row-hidden');
-//                        }
                     });
+                }
+            });
+        }
+        if ($param === "author") {
+            $('.other-event').parent().parent().addClass('row-hidden');
+            dayRows.each(function () {
+                $this = $(this);
+                if (!$this.hasClass('row-hidden')) {
+                    $this.nextUntil('.day-rows').each(function () {
+                        $headrow = $(this);
+                        $subrowgroup = $headrow.next();
+                        if (!$headrow.hasClass('row-hidden')) {
+                            if ($subrowgroup.hasClass($subrows_group_class)) {
+                                var subrows = $subrowgroup.find('.' + $subrows_class);
+                                $subrow = null;
+                                subrows.each(function () {
+                                    $subrow = $(this);
+                                    $presenter = $subrow.find('.search-anchor.sub-row-anchor').attr("presenter-name").split(',');
+                                    $copresenterlist = null;
 
-                    console.log("---");
+                                    if (!$subrow.hasClass('row-hidden')) {
+                                        if (coauthorFilter.is(':checked')) {
+                                            $copresenter = $subrow.find('.search-anchor.sub-row-anchor').attr("copresenters-name");
+                                            if ($copresenter.indexOf(',') > -1) {
+                                                $copresenterlist = $copresenter.split(',');
+                                                for ($j = 0; $j < $copresenterlist.length; $j++) {
+                                                    $copresenterlist[$j] = $.trim($copresenterlist[$j]) + ".";
+                                                }
+                                            } else {
+                                                $copresenter = $copresenterlist;
+                                            }
+                                        }
+                                        if (coauthorFilter.is(':checked')) {
+                                            $presenter = $presenter[0] + ".";
+                                            if ($.inArray($filterVal, $copresenterlist) > -1 || $presenter === $filterVal) {
+                                                $subrow.parent().removeClass('closed');
+                                                $subrow.removeClass('row-hidden');
+                                                $arrow = $headrow.find('.toggle-arrow');
+                                                $arrow.removeClass('glyphicon-chevron-down');
+                                                $arrow.addClass('glyphicon-chevron-up');
+                                                $headrow.removeClass('row-hidden');
+                                            } else {
+                                                $subrow.addClass('row-hidden');
+                                            }
+                                        } else {
+                                            $presenter = $presenter[0] + ".";
+                                            if ($presenter === $filterVal) {
+                                                $subrow.parent().removeClass('closed');
+                                                $subrow.removeClass('row-hidden');
+                                                $arrow = $headrow.find('.toggle-arrow');
+                                                $arrow.removeClass('glyphicon-chevron-down');
+                                                $arrow.addClass('glyphicon-chevron-up');
+                                                $headrow.removeClass('row-hidden');
+                                            } else {
+                                                $subrow.addClass('row-hidden');
+                                            }
+                                        }
+
+                                    }
+                                });
+
+                                if ($subrowgroup.find('.row-hidden').length === $subrowgroup.find('.' + $subrows_class).length) {
+                                    $headrow.addClass('row-hidden');
+                                }
+                            }
+                        }
+                    });
                 }
             });
         }

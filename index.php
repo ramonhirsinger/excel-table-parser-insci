@@ -50,6 +50,7 @@ and open the template in the editor.
                                     <option value="12:30 Uhr">12:30 Uhr (p.m)</option>
                                     <option value="13:15 Uhr">13:15 Uhr (p.m)</option>
                                     <option value="13:30 Uhr">13:30 Uhr (p.m)</option>
+                                    <option value="13:45 Uhr">13:45 Uhr (p.m)</option>
                                     <option value="14:45 Uhr">14:45 Uhr (p.m)</option>
                                     <option value="15:15 Uhr">15:15 Uhr (p.m)</option>
                                     <option value="17:00 Uhr">17:00 Uhr (p.m)</option>
@@ -72,7 +73,7 @@ and open the template in the editor.
                                     <option value="null">Verfügbare Autoren</option>
                                     <?php foreach ($authors as $key => $author_name): ?>
                                         <?php if ($author_name !== "."): ?>
-                                            <option value="<?php echo $key; ?>"><?php echo $author_name; ?></option>
+                                            <option value="<?php echo $author_name; ?>"><?php echo $author_name; ?></option>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </select>
@@ -81,7 +82,7 @@ and open the template in the editor.
                                 </span>
                             </div>
                         </div>
-                        <label class="mt-10 pull-right">Nach Co-Autoren Filtern <input name="check_co_authors" class="ml-10" type="checkbox" /></label>
+                        <label class="mt-10 pull-right">Nach Co-Autoren Filtern <input id="check_coauthor" name="check_co_authors" class="ml-10" type="checkbox" /></label>
                     </div>
                     <div class="col-xs-6">
                         <button type="button" class="btn btn-default pull-left foot-button" aria-label="Ansicht drucken"  onClick="javascript:generalScript.printPage()">
@@ -137,7 +138,7 @@ and open the template in the editor.
                                                                        chair="<?php echo $event['chair']; ?>"
                                                                        row-type="head" 
                                                                        event-id="<?php echo $event['symposium_id']; ?>"
-                                                                       title-symposium="<?php echo stripslashes($event['title_symposium'])?>"
+                                                                       title-symposium='<?php echo stripslashes($event['title_symposium']); ?>'
                                                                        />
                                                                    <?php else: ?>
                                                                 <input class="search-anchor head-row-anchor" 
@@ -146,7 +147,7 @@ and open the template in the editor.
                                                                        starttime="<?php echo getTimeString($event['starttime']); ?>" 
                                                                        row-type="head" 
                                                                        room="<?php echo $event['room']; ?>"
-                                                                       title-symposium="<?php echo stripslashes($event['title_symposium'])?>"
+                                                                       title-symposium='<?php echo stripslashes($event['title_symposium']); ?>'
                                                                        />
                                                                    <?php endif; ?>
                                                             <table class="table_row_box <?php getStyleClassById($current_id) ?>">
@@ -162,18 +163,27 @@ and open the template in the editor.
                                                                         <?php else: ?>
                                                                             <td><?php echo "<a class='full-link' target='_blank' href='https://www.suchtkongress2017.de/programm/oeffentliche-lesung/'><b>" . stringNotZero($event['symposium_id']) . "</b>" . stripslashes($event['title_symposium']) . "</a>"; ?></td>
                                                                         <?php endif; ?>
-                                                                        <td class="t-c-10"><?php echo "<span>Zeit: <b>" . getTimeString($event['starttime']) . "</b></span>"; ?></td>
+                                                                        <td class="t-c-20">
+                                                                            <div class="container-fluid">
+                                                                                <div class="col-xs-6"><span>Zeit:</span></div>
+                                                                                <div class="col-xs-6"><?php echo "<b>" . getTimeString($event['starttime']) . "</b>"; ?></div>
+                                                                            </div>
+                                                                        </td>
                                                                     </tr>
                                                                     <?php if ($event['title_symposium'] !== "Pause" && $event['title_symposium'] !== "Posterpause"): ?>
                                                                         <tr>
+                                                                            <!--<td class="w44px"></td>-->
                                                                             <td>
                                                                                 <?php if ($event['chair'] !== "-"): ?>
-                                                                                    <?php echo "<span>Chairs: </span> " . $event['chair']; ?>
+                                                                                    <?php echo "<span class='ml-49'>Chairs: </span> " . $event['chair']; ?>
                                                                                 <?php endif; ?>
                                                                             </td>
-                                                                            <td class="t-c-10">
+                                                                            <td class="t-c-20">
                                                                                 <?php if ($event['room'] !== "-"): ?>
-                                                                                    <?php echo "<span>Raum: <b>" . $event['room'] . "</b></span>"; ?>
+                                                                                    <div class="container-fluid">
+                                                                                        <div class="col-xs-6"><span>Raum:</span></div>
+                                                                                        <div class="col-xs-6"><?php echo "<b>" . $event['room'] . "</b>"; ?></div>
+                                                                                    </div>
                                                                                 <?php endif; ?>
                                                                             </td>
                                                                         </tr>
